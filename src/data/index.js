@@ -61,9 +61,7 @@ async function initializeData() {
 	try {
 		await knexInstance.raw('SELECT 1+1 AS result');
 		await knexInstance.raw(`CREATE DATABASE IF NOT EXISTS ${knexfile.development.connection.database}`);
-	
-		// We need to update the Knex configuration and reconnect to use the created database by default
-		// USE ... would not work because a pool of connections is used
+
 		await knexInstance.destroy();
 	
 		knexOptions.connection.database = knexfile.development.connection.database;
@@ -121,6 +119,7 @@ function getKnex() {
 }
 const tables = Object.freeze({
 	user: 'user',
+	menu: 'menu',
 });
 
 module.exports = {
