@@ -2,7 +2,7 @@ const Router = require('@koa/router');
 const userservice = require('../service/user');
 
 const getAllTransactions = async (ctx) => {
-	ctx.body = await userservice.getAllTransactions();
+	ctx.body = await userservice.getAllusers();
 };
 const deleteTransaction = async (ctx) => {
 	await userservice.deleteByIdService(ctx.params.id);
@@ -29,7 +29,7 @@ const getByEmail = async (ctx) => {
  */
  module.exports = (app) => {
 	const router = new Router({
-		prefix: '/users',
+		prefix: '/user',
 	});
 
 	router.get('/', getAllTransactions);

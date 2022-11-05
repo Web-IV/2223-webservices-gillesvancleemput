@@ -1,13 +1,12 @@
 const Router = require('@koa/router');
 const MenuService = require('../service/menu');
-const getLogger = require('../core/logging');
+
 
 
 const getByIdMenu = async (ctx) => {
 	ctx.body = await MenuService.getByIdMenuService(ctx.params.id);
 };
 const getAllMenu = async (ctx) => {
-    getLogger().debug(`Fetching all menu`);
 	ctx.body = await MenuService.getAllMenuService();
 };
 const deleteMenu = async (ctx) => {
