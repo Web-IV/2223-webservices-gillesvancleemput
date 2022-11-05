@@ -1,24 +1,27 @@
 const Router = require('@koa/router');
-const transactionService = require('../service/transaction');
+const userservice = require('../service/user');
 
 const getAllTransactions = async (ctx) => {
-	ctx.body = await transactionService.getAllTransactions();
+	ctx.body = await userservice.getAllTransactions();
 };
 const deleteTransaction = async (ctx) => {
-	await transactionService.deleteByIdService(ctx.params.id);
+	await userservice.deleteByIdService(ctx.params.id);
 	ctx.status = 204;
 };
 const createUser = async (ctx) => {
-	await transactionService.createUserService(ctx.request.body.naam, ctx.request.body.voornaam, ctx.request.body.email);
+	await userservice.createUserService(ctx.request.body.naam, ctx.request.body.voornaam, ctx.request.body.email);
 	ctx.status = 204;
 };
 const updateTransaction = async (ctx) => {
-	await transactionService.updateByIdService(ctx.request.body.naam, ctx.request.body.voornaam, ctx.request.body.email);
+	await userservice.updateByIdService(ctx.request.body.naam, ctx.request.body.voornaam, ctx.request.body.email);
 	ctx.status = 204;
 };
 const getByEmail = async (ctx) => {
-	ctx.body = await transactionService.getByEmailService(ctx.params.email);
+	ctx.body = await userservice.getByEmailService(ctx.params.email);
 };
+
+
+
 /**
  * Install transaction routes in the given router.
  *
@@ -26,7 +29,7 @@ const getByEmail = async (ctx) => {
  */
  module.exports = (app) => {
 	const router = new Router({
-		prefix: '/transactions',
+		prefix: '/users',
 	});
 
 	router.get('/', getAllTransactions);
@@ -34,6 +37,7 @@ const getByEmail = async (ctx) => {
 	router.post('/', createUser);
 	router.put('/:email', updateTransaction);
 	router.get('/:email', getByEmail);
+
 	app.use(router.routes()).use(router.allowedMethods());
 	
 };

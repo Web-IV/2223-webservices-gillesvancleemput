@@ -12,5 +12,9 @@ module.exports = {
       username: 'root',
       password: 'root',
     },
-  }
+  },
+  cors: {
+		origins: ['http://localhost:3000'],
+		maxAge: 3 * 60 * 60,
+	},
 };

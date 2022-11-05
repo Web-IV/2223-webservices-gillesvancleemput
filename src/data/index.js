@@ -120,6 +120,9 @@ function getKnex() {
 const tables = Object.freeze({
 	user: 'user',
 	menu: 'menu',
+	bestelling: 'bestelling',
+	bestellingItem: 'bestellingItem',
+	
 });
 
 module.exports = {

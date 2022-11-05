@@ -1,5 +1,6 @@
 const Router = require('@koa/router');
-const installTransactionRouter = require('./_transactions');
+const installUserRouter = require('./_user');
+const installMenuRouter = require('./_menu');
 const installHealthRouter = require('./_health');
 
 
@@ -13,7 +14,8 @@ const installHealthRouter = require('./_health');
 		prefix: '/api',
 	});
 
-	installTransactionRouter(router);
+	installUserRouter(router);
+	installMenuRouter(router);
 	installHealthRouter(router);
 
 	app.use(router.routes()).use(router.allowedMethods());
