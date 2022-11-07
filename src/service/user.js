@@ -9,9 +9,14 @@ const debugLog = (message, meta = {}) => {
 };
 
 const getAllusers = async() => {
-	debugLog('Fetching all users');
-	return await user.getAll();
+	debugLog("Fetching all blog");
+	const items = await user.getAll();
+	return {
+	  items,
+	};
+	
 };
+
 const deleteByIdService = async (id) => {
 	debugLog(`Deleting user with id ${id}`);
 	return await user.deleteById(id);
