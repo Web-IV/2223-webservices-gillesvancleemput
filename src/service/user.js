@@ -3,6 +3,7 @@ const user = require('../repository/user');
 const { v4: uuidv4 } = require('uuid');
 
 
+
 const debugLog = (message, meta = {}) => {
 	if (!this.logger) this.logger = getLogger();
 	this.logger.debug(message, meta);
@@ -21,16 +22,22 @@ const deleteByIdService = async (id) => {
 	debugLog(`Deleting user with id ${id}`);
 	return await user.deleteById(id);
 };
-const createUserService = async (naam, voornaam, email) => {
-	debugLog(`Creating user with id ${naam}`);
-	return await user.createUser(uuidv4(), naam, voornaam, email);
+const createUserService = async (ctx) => {
+	const { naam, voornaam, email } = ctx.request.body;
+	const userId = uuidv4();
+	getLogger().info(`Service: Creating user with id ${userId}, naam ${naam}, voornaam ${voornaam}, email ${email}`);
+	return await user.createUser(userId, naam, voornaam, email);
+
 }
-const updateByIdService = async (naam, voornaam, email) => {
-	debugLog(`Updating user with id ${naam}`);
+const updateByIdService = async (ctx) => {
+	const { email } = ctx.params;
+	const { naam, voornaam} = ctx.request.body;
+	getLogger().info(`Service: Updating user with email ${email}`);
 	return await user.updateByemail(naam, voornaam, email);
 }
-const getByEmailService = async (email) => {
-	debugLog(`Fetching user with email ${email}`);
+const getByEmailService = async (ctx) => {
+	const { email } = ctx.params;
+	getLogger().info(`Service: Getting user with email ${email}`);
 	return await user.getByEmail(email);
 }
 

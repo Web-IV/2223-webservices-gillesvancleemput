@@ -9,15 +9,16 @@ const deleteTransaction = async (ctx) => {
 	ctx.status = 204;
 };
 const createUser = async (ctx) => {
-	await userservice.createUserService(ctx.request.body.naam, ctx.request.body.voornaam, ctx.request.body.email);
-	ctx.status = 204;
+	await userservice.createUserService(ctx);
+	ctx.status = 201;
 };
 const updateTransaction = async (ctx) => {
-	await userservice.updateByIdService(ctx.request.body.naam, ctx.request.body.voornaam, ctx.request.body.email);
+	await userservice.updateByIdService(ctx);
 	ctx.status = 204;
 };
 const getByEmail = async (ctx) => {
-	ctx.body = await userservice.getByEmailService(ctx.params.email);
+	ctx.body = await userservice.getByEmailService(ctx);
+	ctx.status = 201;
 };
 
 

@@ -33,6 +33,7 @@ async function main() {
   const logger = getLogger();
 
   const app = new Koa();
+  app.use(bodyParser());
   app.use(
 	koaCors({
 		origin: (ctx) => {

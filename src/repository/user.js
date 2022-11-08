@@ -27,7 +27,7 @@ const updateByemail = async (naam, voornaam, email) => {
     const logger = getLogger();
     logger.info(`Updating user with email ${email}`);
     const knex = getKnex();
-    const user = await knex(tables.user).where('email', email).update({naam, voornaam});
+    const user = await knex(tables.user).where('email', email).update({ naam, voornaam });
     return user;
    
 }

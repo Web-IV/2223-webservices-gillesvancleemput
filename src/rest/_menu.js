@@ -1,5 +1,6 @@
 const Router = require('@koa/router');
 const MenuService = require('../service/menu');
+const {getLogger} = require('../core/logging');
 
 
 
@@ -14,12 +15,14 @@ const deleteMenu = async (ctx) => {
 	ctx.status = 204;
 };
 const createMenuItem = async (ctx) => {
-	await MenuService.createMenuItemService(ctx.request.body.naam, ctx.request.body.prijs, ctx.request.body.type, ctx.request.body.beschrijving);
-	ctx.status = 204;
-};
+	getLogger().silly(`Router: createMenuItem with body ${JSON.stringify(ctx.request.body)}`);
+	const Menu = await MenuService.createMenuItemService(ctx);
+	ctx.body = Menu;
+	ctx.status = 201;
+  };
 const updateMenuItem = async (ctx) => {
-	await MenuService.updateByIdMenuService(ctx.request.body.naam, ctx.request.body.prijs, ctx.request.body.type, ctx.request.body.beschrijving);
-    ctx.status = 204;
+	await MenuService.updateByIdMenuService(ctx);
+	ctx.status = 204;
 };
 
 
