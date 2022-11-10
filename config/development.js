@@ -1,3 +1,5 @@
+const {DATABANK_USERNAME} = process.env;
+const {DATABANK_PASSWORD} = process.env;
 module.exports = {
   log: {
     level: 'silly',
@@ -9,8 +11,8 @@ module.exports = {
       host: 'localhost',
       port: 3306,
       name: 'sinsin',
-      username: 'root',
-      password: 'root',
+      username: DATABANK_USERNAME,
+      password: DATABANK_PASSWORD,
     },
   },
   cors: {
