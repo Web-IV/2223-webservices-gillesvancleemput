@@ -21,8 +21,6 @@ const getByEmail = async (ctx) => {
 	ctx.status = 201;
 };
 
-
-
 /**
  * Install transaction routes in the given router.
  *

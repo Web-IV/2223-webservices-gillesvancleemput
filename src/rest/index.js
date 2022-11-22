@@ -2,6 +2,7 @@ const Router = require('@koa/router');
 const installUserRouter = require('./_user');
 const installMenuRouter = require('./_menu');
 const installHealthRouter = require('./_health');
+const installBestellingRouter = require('./_bestelling');
 
 
 /**
@@ -17,6 +18,7 @@ const installHealthRouter = require('./_health');
 	installUserRouter(router);
 	installMenuRouter(router);
 	installHealthRouter(router);
+	installBestellingRouter(router);
 
 	app.use(router.routes()).use(router.allowedMethods());
 };
