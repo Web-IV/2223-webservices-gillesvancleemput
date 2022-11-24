@@ -6,7 +6,7 @@ const {getLogger} = require('../core/logging');
 const createBestelling = async (ctx) => {
     await bestellingservice.createBestellingService(ctx);
     getLogger().info(`Router: Bestelling created`);
-    ctx.status = 201;
+	ctx.status = 201;
 };
 
 

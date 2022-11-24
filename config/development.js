@@ -5,15 +5,12 @@ module.exports = {
     level: 'silly',
     disabled: false,
   },
-  databank:{
-    client: "msql2",
-    connection: {
+  database:{
+      client: "mysql2",
       host: 'localhost',
       port: 3306,
       name: 'sinsin',
-      username: DATABANK_USERNAME,
-      password: DATABANK_PASSWORD,
-    },
+
   },
   cors: {
 		origins: ['http://localhost:3000'],

@@ -9,6 +9,7 @@ const getByIdMenu = async (ctx) => {
 };
 const getAllMenu = async (ctx) => {
 	ctx.body = await MenuService.getAllMenuService();
+	ctx.status = 200;
 };
 const deleteMenu = async (ctx) => {
 	await MenuService.deleteByIdMenuService(ctx.params.id);

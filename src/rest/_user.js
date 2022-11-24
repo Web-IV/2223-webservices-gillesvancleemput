@@ -3,6 +3,7 @@ const userservice = require('../service/user');
 
 const getAllTransactions = async (ctx) => {
 	ctx.body = await userservice.getAllusers();
+	ctx.status = 200;
 };
 const deleteTransaction = async (ctx) => {
 	await userservice.deleteByIdService(ctx.params.id);

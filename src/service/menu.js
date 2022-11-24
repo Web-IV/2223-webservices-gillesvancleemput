@@ -17,6 +17,7 @@ const getAllMenuService = async () => {
 	return {
 		items,
 	};
+	
 }
 const deleteByIdMenuService = async (id) => {
 	return await menu.deleteByIdMenu(id);
