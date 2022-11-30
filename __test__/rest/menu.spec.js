@@ -31,9 +31,6 @@ const dataToDelete = {
     bestellingItem : ["3c6b283a-491d-4152-8197-355e598216dd", "56cab40e-3b28-4043-8280-8e62d7ce7dd3", "8ae089d4-bd01-4135-b5a2-dfc9edbf79d7"]
 };
 
-
-
-
 describe("menu",()=>{
     let server;
     let request;
@@ -42,33 +39,79 @@ describe("menu",()=>{
         server = await createServer();
         request = supertest(server.getApp().callback());
         knex = getKnex();
-        await knex(tables.bestelling).insert(data.bestelling);
-		await knex(tables.user).insert(data.user);
-		await knex(tables.menu).insert(data.menu);
-        await knex(tables.bestellingItem).insert(data.bestellingItem);
     });
     afterAll(async()=>{
-        await knex(tables.bestellingItem)
-            .whereIn('bestellingId', dataToDelete.bestellingItem)
-            .delete();
-
-        await knex(tables.bestelling)
-            .whereIn('bestellingId', dataToDelete.bestelling)
-            .delete();
-
-        await knex(tables.user)
-            .whereIn('id', dataToDelete.user)
-            .delete();
-        await knex(tables.menu)
-            .whereIn('itemId', dataToDelete.menu)
-            .delete();
         await server.stop();
     });
     const url = '/api/menu';
     describe("GET api/menu",()=>{
+        beforeAll(async()=>{
+            await knex(tables.menu).insert(data.menu);
+        });
+        afterAll(async()=>{
+            await knex(tables.menu).whereIn('itemId',dataToDelete.menu).delete();
+        });
         it("should return 200 and all transactions",async()=>{
             const response = await request.get(url);
             expect(response.status).toBe(200);
+            expect(response.body).toEqual({"items": data.menu});
         });
     });
+    describe("POST api/menu",()=>{
+        const menuItemsToDelete =[];
+        beforeAll(async()=>{
+            await knex(tables.menu).insert(data.menu);
+        });
+        afterAll(async()=>{
+            await knex(tables.menu).whereIn('itemId',menuItemsToDelete).delete();
+            await knex(tables.menu).whereIn('itemId',dataToDelete.menu).delete();
+        });
+        it("should return 200 and the created transaction",async()=>{
+            const response = await request.post(url).send(
+                {naam: 'test', prijs: 13, type: 'test', beschrijving: 'test'}
+            );
+            expect(response.status).toBe(201);
+            expect(response.body.naam).toBe('test');
+            expect(response.body.prijs).toBe(13);
+            expect(response.body.type).toBe('test');
+            expect(response.body.beschrijving).toBe('test');
+            menuItemsToDelete.push(response.body.itemId);
+        });
+    });
+    describe("PUT api/menu",()=>{
+        const menuItemsToDelete =[];
+        beforeAll(async()=>{
+            await knex(tables.menu).insert(data.menu);
+        });
+        afterAll(async()=>{
+            await knex(tables.menu).whereIn('itemId',menuItemsToDelete).delete();
+            await knex(tables.menu).whereIn('itemId',dataToDelete.menu).delete();
+        });
+        it("should return 200 and the updated transaction",async()=>{
+            const response = await request.put(`${url}/0f8c92a2-2290-459c-b094-12a48a27f925`).send(
+                {naam: 'test', prijs: 13, type: 'test', beschrijving: 'test'}
+            );
+            expect(response.status).toBe(200);
+            expect(response.body.naam).toBe('test');
+            expect(response.body.prijs).toBe(13);
+            expect(response.body.type).toBe('test');
+            expect(response.body.beschrijving).toBe('test');
+            menuItemsToDelete.push(response.body.itemId);
+        });
+    });
+    describe("DELETE api/menu",()=>{
+        beforeAll(async()=>{
+            await knex(tables.menu).insert(data.menu);
+        });
+        afterAll(async()=>{
+            await knex(tables.menu).whereIn('itemId',dataToDelete.menu).delete();
+        });
+        it("should return 200 and the deleted transaction",async()=>{
+            const response = await request.delete(`${url}/0f8c92a2-2290-459c-b094-12a48a27f925`);
+            expect(response.status).toBe(204);
+            expect(response.body).toEqual({});
+        });
+    });
+    
+
 })
