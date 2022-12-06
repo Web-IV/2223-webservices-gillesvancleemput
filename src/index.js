@@ -12,7 +12,7 @@ async function main() {
     process.on('SIGQUIT', onClose);
   }
   catch(err){
-    prosess.exit(-1);
+    process.exit(-1);
   }
 
 }

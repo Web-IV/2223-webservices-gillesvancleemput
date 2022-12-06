@@ -31,11 +31,11 @@ const updateByemail = async (naam, voornaam, email) => {
     return user;
    
 }
-const getByEmail = async (email) => {
+const getById = async (Id) => {
     const logger = getLogger();
-    logger.info(`Fetching user with email ${email}`);
+    logger.info(`Fetching user with id ${Id}`);
     const knex = getKnex();
-    const user = await knex(tables.user).where('email', email).select();
+    const user = await knex(tables.user).where('userId', Id).first();
     return user;
 }
 
@@ -46,5 +46,5 @@ module.exports = {
     deleteById,
     createUser,
     updateByemail,
-    getByEmail,
+    getById,
 };

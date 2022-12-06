@@ -9,10 +9,10 @@ const createBestellingService = async (ctx) => {
     getLogger().info(`Creating bestelling for user ${userId}`);
     const bestellingId = uuidv4();
     getLogger().info(`adding all items of bestelling to database`);
+    await bestelling.createBestelling(bestellingId, userId);
     for (let index = 0; index < list.length; index++) {
         await addItemToBestellingService(bestellingId, list[index].itemId, parseInt(list[index].aantal));
-    }
-    await bestelling.createBestelling(bestellingId, userId);   
+    }   
 }
 const addItemToBestellingService = async (bestellingId, ItemId, aantal) => {
     await bestelling.addItemToBestelling(bestellingId, ItemId, aantal);

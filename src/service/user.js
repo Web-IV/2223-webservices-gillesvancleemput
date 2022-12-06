@@ -35,10 +35,10 @@ const updateByIdService = async (ctx) => {
 	getLogger().info(`Service: Updating user with email ${email}`);
 	return await user.updateByemail(naam, voornaam, email);
 }
-const getByEmailService = async (ctx) => {
-	const { email } = ctx.params;
-	getLogger().info(`Service: Getting user with email ${email}`);
-	return await user.getByEmail(email);
+const getByIdService = async (ctx) => {
+	const { id } = ctx.params;
+	getLogger().info(`Service: Fetching user with id ${id}`);
+	return await user.getById(id);
 }
 
 
@@ -48,6 +48,6 @@ module.exports = {
 	deleteByIdService,
 	createUserService,
 	updateByIdService,
-	getByEmailService,
+	getByIdService,
 
 };
