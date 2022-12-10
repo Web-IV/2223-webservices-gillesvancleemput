@@ -1,53 +1,53 @@
-const { getLogger } = require('../core/logging');
-const user = require('../repository/user');
-const { v4: uuidv4 } = require('uuid');
-
-
+const { getLogger } = require("../core/logging");
+const userRepo = require("../repository/user");
+const { v4: uuidv4 } = require("uuid");
+const { ServiceError } = require("../core/serviceError");
 
 const debugLog = (message, meta = {}) => {
-	if (!this.logger) this.logger = getLogger();
-	this.logger.debug(message, meta);
+  if (!this.logger) this.logger = getLogger();
+  this.logger.debug(message, meta);
 };
 
-const getAllusers = async() => {
-	debugLog("Fetching all blog");
-	const items = await user.getAll();
-	return {
-	  items,
-	};
-	
+const createUserService = async ({
+  name,
+  auth0id,
+  email,
+  straat,
+  huisnummer,
+  postcode,
+  gemeente,
+}) => {
+  debugLog("Creating a new user", {
+    name,
+  });
+  return await userRepo.createUser(
+    name,
+    auth0id,
+    email,
+    straat,
+    huisnummer,
+    postcode,
+    gemeente
+  );
 };
 
-const deleteByIdService = async (id) => {
-	debugLog(`Deleting user with id ${id}`);
-	return await user.deleteById(id);
+const getByAuth0Id = async (auth0id) => {
+  debugLog(`Fetching user with auth0id ${auth0id}`);
+  const user = await userRepo.findByAuth0Id(auth0id);
+
+  if (!user) {
+    throw ServiceError.notFound(`No user with id ${auth0id} exists`, {
+      auth0id,
+    });
+  }
+  return user;
 };
-const createUserService = async (ctx) => {
-	const { naam, voornaam, email } = ctx.request.body;
-	const userId = uuidv4();
-	getLogger().info(`Service: Creating user with id ${userId}, naam ${naam}, voornaam ${voornaam}, email ${email}`);
-	return await user.createUser(userId, naam, voornaam, email);
-
-}
-const updateByIdService = async (ctx) => {
-	const { email } = ctx.params;
-	const { naam, voornaam} = ctx.request.body;
-	getLogger().info(`Service: Updating user with email ${email}`);
-	return await user.updateByemail(naam, voornaam, email);
-}
-const getByIdService = async (ctx) => {
-	const { id } = ctx.params;
-	getLogger().info(`Service: Fetching user with id ${id}`);
-	return await user.getById(id);
-}
-
-
+const checkForUser = async (auth0id) => {
+  return await userRepo.checkForUser(auth0id);
+};
 
 module.exports = {
-	getAllusers,
-	deleteByIdService,
-	createUserService,
-	updateByIdService,
-	getByIdService,
-
+  createUserService,
+  getByAuth0Id,
+  checkForUser,
 };

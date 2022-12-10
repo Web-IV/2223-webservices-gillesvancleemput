@@ -1,78 +1,34 @@
-const Router = require('@koa/router');
-const userservice = require('../service/user');
-const Joi = require('joi');
-const validate = require ('../rest/_validation');
+const Router = require("@koa/router");
+const userservice = require("../service/user");
+const Joi = require("joi");
+const validate = require("../rest/_validation");
+const { addUserInfo } = require("../core/auth");
 
-const getAll = async (ctx) => {
-	ctx.body = await userservice.getAllusers();
-	ctx.status = 200;
-};
-const deleteUser = async (ctx) => {
-	await userservice.deleteByIdService(ctx.params.id);
-	ctx.status = 204;
-};
-deleteUser.valildationScheme = {
-	params: Joi.object({
-		id: Joi.string().required().min(1).max(255),
-	}),
-};
 const createUser = async (ctx) => {
-	await userservice.createUserService(ctx);
-	ctx.status = 201;
-};
-createUser.valildationScheme = {
-	body: Joi.object({
-		naam: Joi.string().required(),
-		gebruikersnaam: Joi.string().required(),
-		wachtwoord: Joi.string().required(),
-		email: Joi.string().required(),
-		telefoon: Joi.string().required(),
-		rol: Joi.string().required(),
-	}),
-};
-const updateTransaction = async (ctx) => {
-	await userservice.updateByIdService(ctx);
-	ctx.status = 204;
-};
-updateTransaction.valildationScheme = {
-	params: Joi.object({
-		id: Joi.string().required().min(1).max(255),
-	}),
-	body: Joi.object({
-		naam: Joi.string().required(),
-		gebruikersnaam: Joi.string().required(),
-		wachtwoord: Joi.string().required(),
-		email: Joi.string().required(),
-		telefoon: Joi.string().required(),
-		rol: Joi.string().required(),
-	}),
-};
-const getById = async (ctx) => {
-	ctx.body = await userservice.getByIdService(ctx);
-	ctx.status = 201;
-};
-getById.valildationScheme = {
-	params: Joi.object({
-		id: Joi.string().required().min(1).max(255),
-	}),
+  await addUserInfo(ctx);
+  console.log(ctx.state);
+  await userservice.createUserService({
+    auth0id: ctx.state.user.sub,
+    name: ctx.state.user.name,
+  });
+  ctx.status = 201;
 };
 
-/**
- * Install transaction routes in the given router.
- *
- * @param {Router} app - The parent router.
- */
- module.exports = (app) => {
-	const router = new Router({
-		prefix: '/user',
-	});
+const getUserByAuth0Id = async (ctx) => {
+  const user = await userservice.getByAuth0Id(ctx.params.auth0id);
+  ctx.body = user;
+};
+const checkForUser = async (ctx) => {
+  const boolean = await userservice.checkForUser(ctx.params.auth0id);
+  ctx.body = boolean;
+};
 
-	router.get('/', getAll);
-	router.delete('/:id',validate(deleteUser.valildationScheme), deleteUser);
-	router.post('/',validate(createUser.valildationScheme), createUser);
-	router.put('/:email',validate(updateTransaction.valildationScheme), updateTransaction);
-	router.get('/:id',validate(getById.valildationScheme), getById);
-
-	app.use(router.routes()).use(router.allowedMethods());
-	
+module.exports = (app) => {
+  const router = new Router({
+    prefix: "/user",
+  });
+  router.get("/:auth0id", getUserByAuth0Id);
+  router.post("/", createUser);
+  router.get("/check/:auth0id", checkForUser);
+  app.use(router.routes()).use(router.allowedMethods());
 };

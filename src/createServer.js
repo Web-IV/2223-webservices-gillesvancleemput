@@ -10,7 +10,7 @@ const CORS_MAX_AGE = config.get("cors.maxAge");
 const { shutdownData } = require("./data");
 const { serializeError } = require("serialize-error");
 const ServiceError = require("./core/serviceError");
-const { chechJwtToken } = require("./core/auth");
+const { checkJwtToken } = require("./core/auth");
 
 const NODE_ENV = config.get("env");
 const LOG_LEVEL = config.get("log.level");
@@ -36,7 +36,10 @@ module.exports = async function createServer() {
   const logger = getLogger();
 
   const app = new Koa();
-  app.use(chechJwtToken());
+  app.use(bodyParser());
+
+  app.use(checkJwtToken());
+
   app.use(async (ctx, next) => {
     const logger = getLogger();
     logger.debug(ctx.headers.authorization);
@@ -44,7 +47,7 @@ module.exports = async function createServer() {
     logger.debug(ctx.state.jwtOriginalError);
     await next();
   });
-  app.use(bodyParser());
+
   app.use(
     koaCors({
       origin: (ctx) => {
@@ -75,7 +78,6 @@ module.exports = async function createServer() {
 
     try {
       await next();
-
       logger.info(`${getStatusEmoji()} ${ctx.method} ${ctx.status} ${ctx.url}`);
     } catch (error) {
       logger.error(`${emoji.get("x")} ${ctx.method} ${ctx.status} ${ctx.url}`, {
@@ -124,6 +126,14 @@ module.exports = async function createServer() {
         if (error.isForbidden) {
           statusCode = 403;
         }
+      }
+      if (ctx.state.jwtOriginalError) {
+        statusCode = 401;
+        errorBody.code = "UNAUTHORIZED";
+        errorBody.message = ctx.state.jwtOriginalError.message;
+        errorBody.details.jwtOriginalError = serializeError(
+          ctx.state.jwtOriginalError
+        );
       }
       ctx.status = statusCode;
       ctx.body = errorBody;

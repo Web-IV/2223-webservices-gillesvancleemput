@@ -1,50 +1,48 @@
-const { getKnex } = require('../data/index');
-const { tables } = require('../data/index');
-const { getLogger } = require('../core/logging');
+const { getKnex } = require("../data/index");
+const { tables } = require("../data/index");
+const { getLogger } = require("../core/logging");
+const { v4: uuidv4 } = require("uuid");
 
-const getAll = async () => {
-    const logger = getLogger();
-    logger.info('Fetching all user');
-    const knex = getKnex();
-    const user = await knex(tables.user).select();
-    return user;
+const createUser = async (
+  name,
+  auth0id,
+  email,
+  straat,
+  huisnummer,
+  postcode,
+  gemeente
+) => {
+  const logger = getLogger();
+  const userId = uuidv4();
+  const rol = "user";
+  logger.info(`Creating user with id ${userId}`);
+  const knex = getKnex();
+  const user = await knex(tables.user).insert({
+    userId,
+    name,
+    auth0id,
+    email,
+    straat,
+    huisnummer,
+    postcode,
+    gemeente,
+    rol,
+  });
+  return userId;
 };
-const deleteById = async (id) => {
-    const logger = getLogger();
-    logger.info(`Deleting user with id ${id}`);
-    const knex = getKnex();
-    const user = await knex(tables.user).where('id', id).del();
-    return user;
+const findByAuth0Id = (auth0id) => {
+  return getKnex()(tables.user).where("auth0id", auth0id).first();
 };
-const createUser = async (id, naam, voornaam, email) => {
-    const logger = getLogger();
-    logger.info(`Creating user with id ${id}`);
-    const knex = getKnex();
-    const user = await knex(tables.user).insert({ id, naam, voornaam, email });
-    return user;
-}
-const updateByemail = async (naam, voornaam, email) => {
-    const logger = getLogger();
-    logger.info(`Updating user with email ${email}`);
-    const knex = getKnex();
-    const user = await knex(tables.user).where('email', email).update({ naam, voornaam });
-    return user;
-   
-}
-const getById = async (Id) => {
-    const logger = getLogger();
-    logger.info(`Fetching user with id ${Id}`);
-    const knex = getKnex();
-    const user = await knex(tables.user).where('userId', Id).first();
-    return user;
-}
-
-   
+const checkForUser = async (auth0id) => {
+  const user = await findByAuth0Id(auth0id);
+  if (!user) {
+    return false;
+  }
+  return true;
+};
 
 module.exports = {
-    getAll,
-    deleteById,
-    createUser,
-    updateByemail,
-    getById,
+  createUser,
+  findByAuth0Id,
+  checkForUser,
 };
