@@ -1,9 +1,8 @@
 const { tables } = require("../index");
 module.exports = {
   up: async (knex) => {
-    await knex.schema.createTable(tables.bestelling, (table) => {
-      table.uuid("bestellingId").primary();
-      table.uuid("userId").notNullable();
+    await knex.schema.table(tables.bestelling, (table) => {
+      table.string("auth0Id").notNullable();
     });
   },
   down: async (knex) => {

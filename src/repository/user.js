@@ -40,9 +40,18 @@ const checkForUser = async (auth0id) => {
   }
   return true;
 };
+const updateUser = async (email, straat, huisnummer, postcode, gemeente) => {
+  return getKnex()(tables.user).where("email", email).update({
+    straat,
+    huisnummer,
+    postcode,
+    gemeente,
+  });
+};
 
 module.exports = {
   createUser,
   findByAuth0Id,
   checkForUser,
+  updateUser,
 };

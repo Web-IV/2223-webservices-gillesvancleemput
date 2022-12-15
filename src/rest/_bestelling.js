@@ -24,15 +24,22 @@ const createBestelling = async (ctx) => {
       gemeente: ctx.request.body.adres.Gemeente,
     });
   }
-
   const newBestelling = await bestellingservice.createBestellingService(
     ctx.request.body.list,
+    ctx.state.user.sub,
     userId
   );
   ctx.body = newBestelling;
   ctx.status = 201;
 };
 createBestelling.valildationScheme = {};
+
+getAllBestellingen = async (ctx) => {
+  const bestellingen = await bestellingservice.getAllBestellingenService(
+    ctx.state.user.sub
+  );
+  ctx.body = bestellingen;
+};
 
 /**
  * Install transaction routes in the given router.
@@ -48,6 +55,7 @@ module.exports = (app) => {
     validate(createBestelling.valildationScheme),
     createBestelling
   );
+  router.get("/", getAllBestellingen);
 
   app.use(router.routes()).use(router.allowedMethods());
 };

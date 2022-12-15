@@ -45,9 +45,19 @@ const getByAuth0Id = async (auth0id) => {
 const checkForUser = async (auth0id) => {
   return await userRepo.checkForUser(auth0id);
 };
+const updateUser = async (email, straat, huisnummer, postcode, gemeente) => {
+  return await userRepo.updateUser(
+    email,
+    straat,
+    huisnummer,
+    postcode,
+    gemeente
+  );
+};
 
 module.exports = {
   createUserService,
   getByAuth0Id,
   checkForUser,
+  updateUser,
 };

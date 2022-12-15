@@ -2,7 +2,8 @@
   "scripts": {
     "start": "npx env-cmd nodemon src/index.js",
     "test": "npx env-cmd -f .env.test jest",
-    "test:coverage": "yarn test --coverage"
+    "test:coverage": "yarn test --coverage",
+    "start:prod": "node src/index.js"
   },
   "dependencies": {
     "@koa/cors": "^4.0.0",

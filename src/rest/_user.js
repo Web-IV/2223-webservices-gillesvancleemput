@@ -22,6 +22,12 @@ const checkForUser = async (ctx) => {
   const boolean = await userservice.checkForUser(ctx.params.auth0id);
   ctx.body = boolean;
 };
+const updateUser = async (ctx) => {
+  const { straat, huisnummer, postcode, gemeente } = ctx.request.body;
+  const email = ctx.params.email;
+  await userservice.updateUser(email, straat, huisnummer, postcode, gemeente);
+  ctx.status = 200;
+};
 
 module.exports = (app) => {
   const router = new Router({
@@ -30,5 +36,6 @@ module.exports = (app) => {
   router.get("/:auth0id", getUserByAuth0Id);
   router.post("/", createUser);
   router.get("/check/:auth0id", checkForUser);
+  router.put("/:email", updateUser);
   app.use(router.routes()).use(router.allowedMethods());
 };
