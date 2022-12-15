@@ -13,7 +13,7 @@ module.exports = {
     name: "sinsin",
   },
   cors: {
-    origins: ["http://localhost:3000"],
+    origins: ["https://sinsinfrontend.onrender.com"],
     maxAge: 3 * 60 * 60,
   },
 };
