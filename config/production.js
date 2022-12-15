@@ -8,9 +8,9 @@ module.exports = {
   },
   database: {
     client: "mysql2",
-    host: "localhost",
-    port: 3306,
-    name: "sinsin",
+    host: "vichogent.be",
+    port: 40043,
+    name: "182542gv",
   },
   cors: {
     origins: ["https://sinsinfrontend.onrender.com"],
