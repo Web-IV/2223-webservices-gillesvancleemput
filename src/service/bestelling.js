@@ -22,12 +22,23 @@ const getAllBestellingenService = async (auth0id) => {
   const bestellingen = await bestelling.getAllBestellingen(auth0id);
   for (let index = 0; index < bestellingen.length; index++) {
     const bestellingId = bestellingen[index].bestellingId;
-    const totalePrijs = await bestelling.berekenPrijsPerBestelling(
-      bestellingId
-    );
+    const totalePrijs = await berekenPrijsPerBestelling(bestellingId);
     bestellingen[index].prijs = totalePrijs;
   }
   return bestellingen;
+};
+const berekenPrijsPerBestelling = async (bestellingId) => {
+  const bestellingItems = await bestelling.getBestellingById(bestellingId);
+  for (let index = 0; index < bestellingItems.length; index++) {
+    const itemId = bestellingItems[index].itemId;
+    const prijs = await bestelling.getPrijsByItemId(itemId);
+    bestellingItems[index].prijs = prijs[0].prijs;
+  }
+  let totalePrijs = 0;
+  for (let index = 0; index < bestellingItems.length; index++) {
+    totalePrijs += bestellingItems[index].prijs * bestellingItems[index].aantal;
+  }
+  return totalePrijs;
 };
 
 module.exports = {

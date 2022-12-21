@@ -26,34 +26,27 @@ const getAllBestellingen = async (auth0id) => {
     .select();
   return bestellingen;
 };
-const berekenPrijsPerBestelling = async (bestellingId) => {
+const getBestellingById = async (bestellingId) => {
   const logger = getLogger();
-  logger.info(`Calculating price for bestelling with id ${bestellingId}`);
+  logger.info(`Getting all items for bestelling with id ${bestellingId}`);
   const knex = getKnex();
-  const a = await knex(tables.bestellingItem)
+  const bestellingItems = await knex(tables.bestellingItem)
     .where("bestellingId", bestellingId)
-    .select("itemId", "aantal");
-  return await berekenTotalePrijs(a);
+    .select();
+  return bestellingItems;
 };
-const berekenTotalePrijs = async (bestellingItems) => {
+const getPrijsByItemId = async (itemId) => {
   const logger = getLogger();
-  logger.info(`Calculating total price for bestelling`);
+  logger.info(`Getting prijs for item with id ${itemId}`);
   const knex = getKnex();
-  let totalePrijs = 0;
-  for (let i = 0; i < bestellingItems.length; i++) {
-    const itemId = bestellingItems[i].itemId;
-    const aantal = bestellingItems[i].aantal;
-    const prijs = await knex(tables.menu)
-      .where("itemId", itemId)
-      .select("prijs");
-    totalePrijs += prijs[0].prijs * aantal;
-  }
-  return totalePrijs;
+  const prijs = await knex(tables.menu).where("itemId", itemId).select("prijs");
+  return prijs;
 };
 
 module.exports = {
   createBestelling,
   addItemToBestelling,
   getAllBestellingen,
-  berekenPrijsPerBestelling,
+  getBestellingById,
+  getPrijsByItemId,
 };

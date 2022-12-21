@@ -37,79 +37,6 @@ const data = {
         "vegan shoarma, mixed salad, pomegranate, red onion, beetroot",
     },
   ],
-
-  bestelling: [
-    {
-      bestellingId: "3c6b283a-491d-4152-8197-355e598216dd",
-      userId: "f98b5c03-8589-4b04-8977-1edd0a931bd9",
-      auth0Id: "google-oauth2|116459538618082009237",
-    },
-    {
-      bestellingId: "56cab40e-3b28-4043-8280-8e62d7ce7dd3",
-      userId: "8e99e823-7270-475a-beaf-997afcabf5c4",
-      auth0Id: "google-oauth2|116459538618082009237",
-    },
-    {
-      bestellingId: "8ae089d4-bd01-4135-b5a2-dfc9edbf79d7",
-      userId: "e5f5dcc0-3103-45dc-a6d9-8313ead3cdba",
-      auth0Id: "google-oauth2|116459538618082009237",
-    },
-  ],
-  user: [
-    {
-      userId: "1",
-      name: "van cleemput",
-      voornaam: "gilles",
-      email: "gilles@gmail.com",
-      straat: "straat",
-      huisnummer: "1",
-      postcode: "9000",
-      gemeente: "Gent",
-      auth0id: "google-oauth2|116459538618082009237",
-      rol: "admin",
-    },
-    {
-      userId: "d55407d8-7495-4d93-99b3-a45246f842ec",
-      name: "van cleemput",
-      voornaam: "mattis",
-      email: "mattis@gmail.com",
-      straat: "straat",
-      huisnummer: "1",
-      postcode: "9000",
-      gemeente: "Gent",
-      auth0id: "google-oauth2|106578054156971262292",
-      rol: "user",
-    },
-    {
-      userId: "e5f5dcc0-3103-45dc-a6d9-8313ead3cdba",
-      name: "lammens",
-      voornaam: "yasmine",
-      email: "yasmine@gmail.com",
-      straat: "straat",
-      huisnummer: "1",
-      postcode: "9000",
-      gemeente: "Gent",
-      auth0id: "auth0|60f1f1b1b0b2f4006a1b0b1b",
-      rol: "user",
-    },
-  ],
-  bestellingItem: [
-    {
-      bestellingId: "3c6b283a-491d-4152-8197-355e598216dd",
-      itemId: "0f8c92a2-2290-459c-b094-12a48a27f925",
-      aantal: 7,
-    },
-    {
-      bestellingId: "3c6b283a-491d-4152-8197-355e598216dd",
-      itemId: "83cbe74d-0d2e-426f-bcec-8c9b78ce1c3d",
-      aantal: 2,
-    },
-    {
-      bestellingId: "3c6b283a-491d-4152-8197-355e598216dd",
-      itemId: "d45979ca-fd2b-428f-b5c7-56ed3cd41fb7",
-      aantal: 1,
-    },
-  ],
 };
 
 const dataToDelete = {
@@ -118,21 +45,6 @@ const dataToDelete = {
     "097c33bf-01dd-4ae6-ad5c-73ef1630f0de",
     "0ea6daae-45f0-4586-97c7-537aeab87c07",
     "0f8c92a2-2290-459c-b094-12a48a27f925",
-  ],
-  bestelling: [
-    "3c6b283a-491d-4152-8197-355e598216dd",
-    "56cab40e-3b28-4043-8280-8e62d7ce7dd3",
-    "8ae089d4-bd01-4135-b5a2-dfc9edbf79d7",
-  ],
-  user: [
-    "1",
-    "d55407d8-7495-4d93-99b3-a45246f842ec",
-    "e5f5dcc0-3103-45dc-a6d9-8313ead3cdba",
-  ],
-  bestellingItem: [
-    "3c6b283a-491d-4152-8197-355e598216dd",
-    "3c6b283a-491d-4152-8197-355e598216dd",
-    "3c6b283a-491d-4152-8197-355e598216dd",
   ],
 };
 
@@ -147,6 +59,7 @@ describe("menu", () => {
     request = r;
     authHeader = a;
   });
+
   const url = "/api/menu";
   describe("GET api/menu", () => {
     beforeAll(async () => {

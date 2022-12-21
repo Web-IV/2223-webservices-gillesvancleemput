@@ -21,7 +21,7 @@ const deleteByIdMenu = async (id) => {
   logger.info(`Deleting menu with id ${id}`);
   const knex = getKnex();
   await knex(tables.menu).where("itemId", id).del();
-  console.log(`${id}`);
+
   return id;
 };
 const createMenuItem = async (itemId, naam, prijs, type, beschrijving) => {
@@ -35,7 +35,6 @@ const createMenuItem = async (itemId, naam, prijs, type, beschrijving) => {
     type,
     beschrijving,
   });
-  console.log(id);
   return id;
 };
 const updateByIdMenu = async (itemId, naam, prijs, type, beschrijving) => {
