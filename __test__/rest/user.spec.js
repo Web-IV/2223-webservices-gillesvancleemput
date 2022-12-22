@@ -91,6 +91,12 @@ describe("user", () => {
         rol: "admin",
       });
     });
+    it("should return 400 validation failed", async () => {
+      const response = await request
+        .get(`${url}/google-oauth2|116459`)
+        .set("Authorization", authHeader);
+      expect(response.status).toBe(500);
+    });
   });
   describe("check for user api/menu", () => {
     beforeAll(async () => {
@@ -104,6 +110,12 @@ describe("user", () => {
         .get(`${url}/check/google-oauth2|116459538618082009237`)
         .set("Authorization", authHeader);
       expect(response.status).toBe(200);
+    });
+    it("should return 400 validation failed", async () => {
+      const response = await request
+        .get(`${url}/check/`)
+        .set("Authorization", authHeader);
+      expect(response.status).toBe(500);
     });
   });
   describe("put api/menu", () => {
@@ -130,6 +142,15 @@ describe("user", () => {
         postcode: "9820",
         gemeente: "merelebeke",
       });
+    });
+    it("the validation should not be succesful", async () => {
+      const response = await request
+        .put(`${url}/yasmine@gmail.com`)
+        .send({
+          straat: "destelberge",
+        })
+        .set("Authorization", authHeader);
+      expect(response.status).toBe(400);
     });
   });
 });

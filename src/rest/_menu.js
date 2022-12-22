@@ -147,7 +147,7 @@ const deleteMenu = async (ctx) => {
 };
 deleteMenu.valildationScheme = {
   params: Joi.object({
-    id: Joi.string().required().min(1).max(255),
+    id: Joi.string().required().min(5).max(255),
   }),
 };
 

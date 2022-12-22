@@ -95,6 +95,13 @@ describe("menu", () => {
       expect(response.body.beschrijving).toBe("test");
       menuItemsToDelete.push(response.body.itemId);
     });
+    it("should return 400 when naam is missing", async () => {
+      const response = await request
+        .post(url)
+        .send({ prijs: 13, type: "test", beschrijving: "test" })
+        .set("Authorization", authHeader);
+      expect(response.status).toBe(400);
+    });
   });
   describe("PUT api/menu", () => {
     const menuItemsToDelete = [];
@@ -117,6 +124,13 @@ describe("menu", () => {
       expect(response.body.beschrijving).toBe("test");
       menuItemsToDelete.push(response.body.itemId);
     });
+    it("should return 400 when naam is missing", async () => {
+      const response = await request
+        .put(`${url}/0f8c92a2-2290-459c-b094-12a48a27f925`)
+        .send({ prijs: 13, type: "test", beschrijving: "test" })
+        .set("Authorization", authHeader);
+      expect(response.status).toBe(400);
+    });
   });
   describe("DELETE api/menu", () => {
     beforeAll(async () => {
@@ -131,6 +145,12 @@ describe("menu", () => {
         .set("Authorization", authHeader);
       expect(response.status).toBe(204);
       expect(response.body).toEqual({});
+    });
+    it("should return 400 when the validation is not complete", async () => {
+      const response = await request
+        .delete(`${url}/0f8`)
+        .set("Authorization", authHeader);
+      expect(response.status).toBe(400);
     });
   });
 });
