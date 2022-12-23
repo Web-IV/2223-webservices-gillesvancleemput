@@ -1,4 +1,4 @@
-# Voornaam Familienaam (Studentennummer)
+# Gilles Van Cleemput (182542gv)
 
 Gilles Van Cleemput
 182542gv
