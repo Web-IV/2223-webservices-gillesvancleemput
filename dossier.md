@@ -74,7 +74,7 @@ De foodbar wou zelf een website hebben waar mensen op konden bestellen. Hier doo
 - **varia**
   - [x] een aantal niet-triviale testen (unit en/of e2e en/of ui)
   - [x] minstens één extra technologie
-  - [ ] duidelijke en volledige README.md
+  - [x] duidelijke en volledige README.md
   - [x] volledig en tijdig ingediend dossier
 
 ### Web Services
@@ -111,7 +111,7 @@ De foodbar wou zelf een website hebben waar mensen op konden bestellen. Hier doo
 - **varia**
   - [x] een aantal niet-triviale testen (min. 1 controller >=80% coverage)
   - [x] minstens één extra technologie
-  - [ ] duidelijke en volledige `README.md`
+  - [x] duidelijke en volledige `README.md`
   - [x] maakt gebruik van de laatste ES6-features (object destructuring, spread operator...)
   - [x] volledig en tijdig ingediend dossier
 
