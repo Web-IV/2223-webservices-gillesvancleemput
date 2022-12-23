@@ -1,9 +1,7 @@
 # Voornaam Familienaam (Studentennummer)
 
-Gilles Van Cleemput 182542gv
-
-> Duid aan welke vakken je volgt en vermeld voor deze vakken de link naar jouw GitHub repository. In het geval je slechts één vak volgt, verwijder alle inhoud omtrent het andere vak.
-> Verwijder alle instructies (lijnen die starten met >)
+Gilles Van Cleemput
+182542gv
 
 - [x] Front-end Web Development
   - [GitHub repository](https://github.com/Web-IV/2223-frontendweb-gillesvancleemput)
@@ -38,6 +36,7 @@ De foodbar wou zelf een website hebben waar mensen op konden bestellen. Hier doo
 ![bestelling form](image_dossier/BestellingForm.png.png)
 ![user page](image_dossier/userInfopage.png)
 ![aanpassen user info pagina](image_dossier/aanpassenUserInfo.png)
+![user history](image_dossier/BestellingHistory.png)
 
 ## Behaalde minimumvereisten
 

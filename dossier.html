@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>dossier.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="voornaam-familienaam-studentennummer">Voornaam Familienaam (Studentennummer)</h1>
+<p>Gilles Van Cleemput
+182542gv</p>
+<ul>
+<li><input type="checkbox" id="checkbox0" checked="true"><label for="checkbox0">Front-end Web Development</label>
+<ul>
+<li><a href="https://github.com/Web-IV/2223-frontendweb-gillesvancleemput">GitHub repository</a></li>
+<li><a href="https://sinsinfrontend.onrender.com">Online versie</a></li>
+</ul>
+</li>
+<li><input type="checkbox" id="checkbox1" checked="true"><label for="checkbox1">Web Services: GITHUB URL</label>
+<ul>
+<li><a href="https://github.com/Web-IV/2223-webservices-gillesvancleemput">GitHub repository</a></li>
+<li><a href="https://sinsinapi.onrender.com">Online versie</a></li>
+</ul>
+</li>
+</ul>
+<p><strong>Logingegevens</strong></p>
+<p><strong>dit is een admin account</strong></p>
+<ul>
+<li>Gebruikersnaam/e-mailadres: test@gmail.com</li>
+<li>Wachtwoord:Server123*</li>
+</ul>
+<p><strong>dit is een user account</strong></p>
+<ul>
+<li>Gebruikersnaam/e-mailadres: user@gmail.com</li>
+<li>Wachtwoord:Server123*</li>
+</ul>
+<h2 id="projectbeschrijving">Projectbeschrijving</h2>
+<p>Mijn web project gaat over een nieuwe vegan food bar in Gent genaamd SinSin. De food bar bestaat sinds de zomer van 2022 en wordt open gehouden door mijn schoonzus.
+De foodbar wou zelf een website hebben waar mensen op konden bestellen. Hier door zouden ze geen ubereats of takeaway moeten betalen om hun services te kunnen gebruiken.
+<img src="image_dossier/erd.png" alt="dit is het erd"></p>
+<h2 id="screenshots">Screenshots</h2>
+<p><img src="image_dossier/Homepage.png" alt="homescreen">
+<img src="image_dossier/MenuPage.png" alt="menu page">
+<img src="image_dossier/bestellingPage.png" alt="bestelling page">
+<img src="image_dossier/BestellingForm.png.png" alt="bestelling form">
+<img src="image_dossier/userInfopage.png" alt="user page">
+<img src="image_dossier/aanpassenUserInfo.png" alt="aanpassen user info pagina">
+<img src="image_dossier/BestellingHistory.png" alt="user history"></p>
+<h2 id="behaalde-minimumvereisten">Behaalde minimumvereisten</h2>
+<h3 id="front-end-web-development">Front-end Web Development</h3>
+<ul>
+<li>
+<p><strong>componenten</strong></p>
+<ul>
+<li><input type="checkbox" id="checkbox2" checked="true"><label for="checkbox2">heeft meerdere componenten - dom &amp; slim (naast login/register)</label></li>
+<li><input type="checkbox" id="checkbox3" checked="true"><label for="checkbox3">definieert constanten (variabelen, functies en componenten) buiten de component</label></li>
+<li><input type="checkbox" id="checkbox4" checked="true"><label for="checkbox4">minstens één form met validatie (naast login/register)</label></li>
+<li><input type="checkbox" id="checkbox5" checked="true"><label for="checkbox5">login systeem (eigen of extern zoals bv. Auth0)</label>
+<br /></li>
+</ul>
+</li>
+<li>
+<p><strong>routing</strong></p>
+<ul>
+<li><input type="checkbox" id="checkbox6" checked="true"><label for="checkbox6">heeft minstens 2 pagina's (naast login/register)</label></li>
+<li><input type="checkbox" id="checkbox7" checked="true"><label for="checkbox7">routes worden afgeschermd met authenticatie en autorisatie</label>
+<br /></li>
+</ul>
+</li>
+<li>
+<p><strong>state-management</strong></p>
+<ul>
+<li><input type="checkbox" id="checkbox8" checked="true"><label for="checkbox8">meerdere API calls (naast login/register)</label></li>
+<li><input type="checkbox" id="checkbox9"><label for="checkbox9">degelijke foutmeldingen indien API call faalt</label></li>
+<li><input type="checkbox" id="checkbox10" checked="true"><label for="checkbox10">gebruikt useState enkel voor lokale state</label></li>
+<li><input type="checkbox" id="checkbox11"><label for="checkbox11">gebruikt Context, useReducer, Redux… voor globale state</label>
+<br /></li>
+</ul>
+</li>
+<li>
+<p><strong>hooks</strong></p>
+<ul>
+<li><input type="checkbox" id="checkbox12" checked="true"><label for="checkbox12">kent het verschil tussen de hooks (useCallback, useEffect…)</label></li>
+<li><input type="checkbox" id="checkbox13" checked="true"><label for="checkbox13">gebruikt de hooks op de juiste manier</label>
+<br /></li>
+</ul>
+</li>
+<li>
+<p><strong>varia</strong></p>
+<ul>
+<li><input type="checkbox" id="checkbox14" checked="true"><label for="checkbox14">een aantal niet-triviale testen (unit en/of e2e en/of ui)</label></li>
+<li><input type="checkbox" id="checkbox15" checked="true"><label for="checkbox15">minstens één extra technologie</label></li>
+<li><input type="checkbox" id="checkbox16" checked="true"><label for="checkbox16">duidelijke en volledige README.md</label></li>
+<li><input type="checkbox" id="checkbox17" checked="true"><label for="checkbox17">volledig en tijdig ingediend dossier</label></li>
+</ul>
+</li>
+</ul>
+<h3 id="web-services">Web Services</h3>
+<ul>
+<li>
+<p><strong>datalaag</strong></p>
+<ul>
+<li><input type="checkbox" id="checkbox18" checked="true"><label for="checkbox18">voldoende complex (meer dan één tabel)</label></li>
+<li><input type="checkbox" id="checkbox19" checked="true"><label for="checkbox19">één module beheert de connectie + connectie wordt gesloten bij sluiten server</label></li>
+<li><input type="checkbox" id="checkbox20" checked="true"><label for="checkbox20">heeft migraties</label></li>
+<li><input type="checkbox" id="checkbox21" checked="true"><label for="checkbox21">heeft seeds</label>
+<br /></li>
+</ul>
+</li>
+<li>
+<p><strong>repositorylaag</strong></p>
+<ul>
+<li><input type="checkbox" id="checkbox22" checked="true"><label for="checkbox22">definieert één repository per entiteit (niet voor tussentabellen) - indien van toepassing</label></li>
+<li><input type="checkbox" id="checkbox23" checked="true"><label for="checkbox23">mapt OO-rijke data naar relationele tabellen en vice versa</label>
+<br /></li>
+</ul>
+</li>
+<li>
+<p><strong>servicelaag met een zekere complexiteit</strong></p>
+<ul>
+<li><input type="checkbox" id="checkbox24" checked="true"><label for="checkbox24">bevat alle domeinlogica</label></li>
+<li><input type="checkbox" id="checkbox25" checked="true"><label for="checkbox25">bevat geen SQL-queries of databank-gerelateerde code</label>
+<br /></li>
+</ul>
+</li>
+<li>
+<p><strong>REST-laag</strong></p>
+<ul>
+<li><input type="checkbox" id="checkbox26" checked="true"><label for="checkbox26">meerdere routes met invoervalidatie</label></li>
+<li><input type="checkbox" id="checkbox27" checked="true"><label for="checkbox27">degelijke foutboodschappen</label></li>
+<li><input type="checkbox" id="checkbox28" checked="true"><label for="checkbox28">volgt de conventies van een RESTful API</label></li>
+<li><input type="checkbox" id="checkbox29" checked="true"><label for="checkbox29">bevat geen domeinlogica</label></li>
+<li><input type="checkbox" id="checkbox30" checked="true"><label for="checkbox30">degelijke authorisatie/authenticatie op alle routes</label>
+<br /></li>
+</ul>
+</li>
+<li>
+<p><strong>varia</strong></p>
+<ul>
+<li><input type="checkbox" id="checkbox31" checked="true"><label for="checkbox31">een aantal niet-triviale testen (min. 1 controller &gt;=80% coverage)</label></li>
+<li><input type="checkbox" id="checkbox32" checked="true"><label for="checkbox32">minstens één extra technologie</label></li>
+<li><input type="checkbox" id="checkbox33" checked="true"><label for="checkbox33">duidelijke en volledige </label><code>README.md</code></li>
+<li><input type="checkbox" id="checkbox34" checked="true"><label for="checkbox34">maakt gebruik van de laatste ES6-features (object destructuring, spread operator...)</label></li>
+<li><input type="checkbox" id="checkbox35" checked="true"><label for="checkbox35">volledig en tijdig ingediend dossier</label></li>
+</ul>
+</li>
+</ul>
+<h2 id="projectstructuur">Projectstructuur</h2>
+<h3 id="front-end-web-development">Front-end Web Development</h3>
+<p>Hoe heb je jouw applicatie gestructureerd (mappen, design patterns, hiërarchie van componenten, state...)?
+Ik heb mijn applicatie onderverdeeld in componenten voor elke pagina. Ik bouw dan de pagina op met zulke componenten.
+Het eerste component in een map is het hoofd component waar de rest op wordt gebouwd.</p>
+<h3 id="web-services">Web Services</h3>
+<p>Hoe heb je jouw applicatie gestructureerd (mappen, design patterns...)?
+Ik heb de rest API gestructureerd zoals in de de les.
+Ik heb de rest api opgesplitst in het 3 lagen model rest, service en repository.</p>
+<h2 id="extra-technologie">Extra technologie</h2>
+<h3 id="front-end-web-development">Front-end Web Development</h3>
+<p>Voor mijn front-end project heb ik de extra technologie emailjs gebruikt.
+Het is een javascript library dat help met versturen van emails door alleen client-side technologie te gebruiken.
+Het heeft geen server nodig je hoeft alleen een supported email service gebruiken zoals gmail en een van hun SDK libraries versturen de email.
+link: https://www.npmjs.com/package/emailjs</p>
+<h3 id="web-services">Web Services</h3>
+<p>De extra technologie dat ik heb gebruikt in het web services project is swagger.
+Swagger is een open-source software framework.
+Met Swagger kun je de structuur van je API's beschrijven zodat machines ze kunnen lezen.<br>
+link: https://www.npmjs.com/package/swagger</p>
+<h2 id="testresultaten">Testresultaten</h2>
+<h3 id="front-end-web-development">Front-end Web Development</h3>
+<p>Ik heb een test geschreven van het aanpassen van een user account.
+De test navigeert zich eerst naar de form om de user te weizigen.
+De form wordt ingevuld en bevestigd.
+Er wordt dan gekeken of de user effectief is aangepast door naar de user info pagina te navigeren.
+De tweede test is het plaatsen van een bestelling.
+De test vult eerst de winkelmand aan om dan verder te gaan de bestelling pagina.
+Op de bestelling pagina wordt de bestelling bevestigd.
+Na het bevestigen van de bestelling wordt er genavigeert naar de pagina waar de bestelling history wordt getoont en wordt er gecontroleert of de bestelling is geplaatst.</p>
+<h3 id="web-services">Web Services</h3>
+<p>De eerste test werd geschreven over de het menu.
+De test probeert de GET, POST, PUT en DELETE van de API voor de menu tabel.
+De tweede test werd geschreven over de user tabel.
+De test probeert de checkforuser GETbyAuthId en het aanmaken van een user.
+<img src="image_dossier/coverage.png" alt="de coverage van de testen"></p>
+<h2 id="gekende-bugs">Gekende bugs</h2>
+<h3 id="front-end-web-development">Front-end Web Development</h3>
+<h3 id="web-services">Web Services</h3>
+<p>Swagger heeft enkele problemen.
+Sommige beschrijvingen in de web voorstelling van swagger willen niet uitvoeren.
+Dit is omdat de gebruiken niet is geautoriseerd voor die api calls uit te voeren.
+Ook zijn de fout codes van swagger niet goed gelinked en staat er gewoon string als uitvoer in de plaats van de gepaste melding zoald 404 niet gevonden.</p>
+<p>Als de backend testen worden uitgevoerd is er een error dat te maken heeft met swagger dit hindert te testen niet. Alle testen worden nog correct uitgevoerd en geslaagd.</p>
+
+</body>
+</html>
